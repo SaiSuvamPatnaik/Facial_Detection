@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.224" />
+        app:layout_constraintVertical_bias="0.136" />
 
     <View
         android:id="@+id/view3"
@@ -32,34 +32,39 @@
 
     <EditText
         android:id="@+id/mail"
+
         android:layout_width="350dp"
         android:layout_height="70dp"
-        android:background="@drawable/round_border"
-        android:drawableStart="@drawable/ic_baseline_mail_outline_24"
+        android:background="@drawable/round_border1"
+        android:drawableStart="@drawable/mail1"
         android:drawablePadding="10dp"
         android:ems="10"
+        android:hint="Enter Mail"
         android:inputType="textPersonName"
         android:padding="16dp"
         android:textColor="#ffffff"
+        android:textColorHint="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view3"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.356" />
 
     <EditText
         android:id="@+id/pass"
         android:layout_width="350dp"
         android:layout_height="70dp"
-        android:background="@drawable/round_border"
-        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:background="@drawable/round_border2"
+        android:drawableStart="@drawable/lock"
         android:drawablePadding="10dp"
         android:ems="10"
+        android:hint="Write your Password"
         android:inputType="textPersonName|textWebPassword"
         android:padding="16dp"
         android:textColor="#ffffff"
+        android:textColorHint="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,6 +72,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mail"
         app:layout_constraintVertical_bias="0.063" />
+
+    <EditText
+        android:id="@+id/pass2"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:background="@drawable/round_border2"
+        android:drawableStart="@drawable/mail1"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="Enter Name"
+        android:inputType="textPersonName|textWebPassword"
+        android:padding="16dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail"
+        app:layout_constraintVertical_bias="0.323" />
+
+    <EditText
+        android:id="@+id/pass3"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:background="@drawable/round_border2"
+        android:drawableStart="@drawable/mail1"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="Gender"
+        android:inputType="textPersonName|textWebPassword"
+        android:padding="16dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail"
+        app:layout_constraintVertical_bias="0.566" />
 
     <Button
         android:id="@+id/signup"
@@ -78,10 +125,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.223"
+        app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.912" />
 
     <Button
         android:id="@+id/back"
@@ -93,8 +140,8 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintHorizontal_bias="0.782"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.912" />
 </androidx.constraintlayout.widget.ConstraintLayout>
