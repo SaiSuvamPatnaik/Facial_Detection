@@ -22,7 +22,7 @@ public class face extends AppCompatActivity {
 
     TextView acc,name,age,gender;
     ImageView img;
-    String d1;
+    String d1,val;
     Button add,show;
     static final int PICK_IMAGE=1;
     Uri imageuri;
@@ -42,11 +42,17 @@ public class face extends AppCompatActivity {
 
         d1=getIntent().getStringExtra("accdetails");
         acc.setText(d1);
+        val = acc.getText().toString().replaceAll("[@.]","");
+
+
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String val = acc.getText().toString().replaceAll("[@.]","");
+
+
                 String data1=name.getText().toString();
                 String Name = data1;
                 String data2=age.getText().toString();
@@ -59,8 +65,8 @@ public class face extends AppCompatActivity {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Details");
-                String id = myRef.push().getKey();
-                myRef.child((val)).child(data1).setValue(obj);
+
+                myRef.child((val)).child(Name).setValue(obj);
 
 
             }
