@@ -9,13 +9,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 
 public class face extends AppCompatActivity {
 
+    TextView acc,name,age,gender;
     ImageView img;
+    String d1;
+    Button add,show;
     static final int PICK_IMAGE=1;
     Uri imageuri;
     @Override
@@ -23,7 +31,40 @@ public class face extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face);
 
-        img = findViewById(R.id.img);
+
+        img= findViewById(R.id.img);
+        name= findViewById(R.id.name);
+        age= findViewById(R.id.age);
+        gender= findViewById(R.id.gender);
+        acc= findViewById(R.id.acc);
+        add= findViewById(R.id.add);
+        show= findViewById(R.id.show);
+
+        d1=getIntent().getStringExtra("accdetails");
+        acc.setText(d1);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String val = acc.getText().toString().replaceAll("[@.]","");
+                String data1=name.getText().toString();
+                String Name = data1;
+                String data2=age.getText().toString();
+                String Age = data2;
+                String data3=gender.getText().toString();
+                String Gender = data3;
+
+                dataholder obj = new dataholder(Name,Age,Gender);
+
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Details");
+                String id = myRef.push().getKey();
+                myRef.child((val)).child(data1).setValue(obj);
+
+
+            }
+        });
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override

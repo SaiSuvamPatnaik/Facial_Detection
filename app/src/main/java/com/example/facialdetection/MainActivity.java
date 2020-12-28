@@ -3,6 +3,7 @@ package com.example.facialdetection;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     View view,view2;
     ImageView imageview2;
-    TextView mail,pass,textView3,textView4,frgtpass;
+    TextView mail,pass,frgt;
 
     Button login,signup;
 
@@ -39,11 +40,17 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth=FirebaseAuth.getInstance();
         pass=(TextView)findViewById(R.id.pass);
         mail=(TextView)findViewById(R.id.mail);
+        frgt=(TextView)findViewById(R.id.frgt);
 
         login=(Button)findViewById(R.id.login);
         signup=(Button)findViewById(R.id.signup);
 
-
+        frgt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,frgtpass.class));
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    String accdetails = mail.getText().toString();
+                                    Intent intent = new Intent(MainActivity.this,face.class);
+                                    intent.putExtra("accdetails",accdetails);
+                                    startActivity(intent);
 
-                                    startActivity(new Intent(MainActivity.this,face.class));
                                     finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
