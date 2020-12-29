@@ -23,6 +23,8 @@ public class myadapter extends FirebaseRecyclerAdapter<dataholder,myadapter.myvi
     @Override
     protected void onBindViewHolder(@NonNull myviewholder myviewholder, int i, @NonNull dataholder dataholder) {
         myviewholder.name.setText(dataholder.getName());
+        myviewholder.age.setText(dataholder.getAge());
+        myviewholder.gender.setText(dataholder.getGender());
     }
 
     @NonNull
@@ -33,10 +35,12 @@ public class myadapter extends FirebaseRecyclerAdapter<dataholder,myadapter.myvi
     }
 
     class myviewholder extends RecyclerView.ViewHolder{
-        TextView name;
+        TextView name,age,gender;
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             name=(TextView)itemView.findViewById(R.id.name);
+            age=(TextView)itemView.findViewById(R.id.age);
+            gender=(TextView)itemView.findViewById(R.id.gender);
 
         }
     }

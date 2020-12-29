@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".details"></activity>
+        <activity android:name=".details"/>
         <activity android:name=".frgtpass" />
         <activity android:name=".face" />
         <activity android:name=".signup" />
