@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +24,7 @@ public class face extends AppCompatActivity {
     TextView acc,name,age,gender;
     ImageView img;
     String d1,val;
-    Button add,show;
+    Button add,show,dlt;
     static final int PICK_IMAGE=1;
     Uri imageuri;
     @Override
@@ -39,11 +40,20 @@ public class face extends AppCompatActivity {
         acc= findViewById(R.id.acc);
         add= findViewById(R.id.add);
         show= findViewById(R.id.show);
+        dlt=findViewById(R.id.dlt);
 
         d1=getIntent().getStringExtra("accdetails");
         acc.setText(d1);
         val = acc.getText().toString().replaceAll("[@.]","");
 
+        dlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(face.this,delete.class);
+                intent.putExtra("val",val);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -67,6 +77,7 @@ public class face extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Details");
 
                 myRef.child((val)).child(Name).setValue(obj);
+                Toast.makeText(face.this,"Data Inserted Successfully",Toast.LENGTH_SHORT).show();
 
 
             }
