@@ -72,6 +72,15 @@ public class face extends AppCompatActivity {
             }
         });
 
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(face.this,details.class);
+                intent.putExtra("val",val);
+                startActivity(intent);
+            }
+        });
+
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

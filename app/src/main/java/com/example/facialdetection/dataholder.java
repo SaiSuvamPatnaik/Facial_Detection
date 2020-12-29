@@ -3,6 +3,10 @@ package com.example.facialdetection;
 public class dataholder {
     String Name,Age,Gender;
 
+    public dataholder(){
+
+    }
+
     public dataholder(String name, String age, String gender) {
         Name = name;
         Age = age;
