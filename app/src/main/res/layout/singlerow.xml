@@ -28,10 +28,10 @@
 
             <ImageView
 
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="5dp"
                 android:layout_height="match_parent"
                 android:id="@+id/img"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="5dp"
                 android:layout_width="120dp"
 
                 android:src="@drawable/ic_baseline_person_24" />
