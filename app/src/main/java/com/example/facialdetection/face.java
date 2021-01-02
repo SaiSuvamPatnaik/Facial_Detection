@@ -116,12 +116,11 @@ public class face extends AppCompatActivity {
 
 
 
-                
+
 
                 final ProgressDialog pd = new ProgressDialog(face.this);
                 pd.setTitle("Uploading Image...");
                 pd.show();
-
                 riversRef.putFile(imageuri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
