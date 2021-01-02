@@ -2,15 +2,25 @@ package com.example.facialdetection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,16 +32,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.face.FaceDetector;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Tag;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class face extends AppCompatActivity {
@@ -50,6 +66,8 @@ public class face extends AppCompatActivity {
     Button add,show,dlt;
     static final int PICK_IMAGE=1;
     Uri imageuri;
+    private Object Tag;
+    int c=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +116,7 @@ public class face extends AppCompatActivity {
 
 
 
-
+                
 
                 final ProgressDialog pd = new ProgressDialog(face.this);
                 pd.setTitle("Uploading Image...");
@@ -187,15 +205,19 @@ public class face extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+
             imageuri = data.getData();
             try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageuri);
                 img.setImageBitmap(bitmap);
+                getBitmapFromUri(imageuri);
+
 
 
 
@@ -203,5 +225,55 @@ public class face extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void getBitmapFromUri(Uri imageuri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(imageuri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        showImage(fileDescriptor);
+
+
+    }
+
+    private void showImage(FileDescriptor fileDescriptor) {
+        ImageView imageView = findViewById(R.id.img);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable=true;
+
+        Bitmap myBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        Paint myRectPaint = new Paint();
+        myRectPaint.setStrokeWidth(15);
+        myRectPaint.setColor(Color.RED);
+        myRectPaint.setStyle(Paint.Style.STROKE);
+
+        Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(),myBitmap.getHeight(),Bitmap.Config.RGB_565);
+        Canvas tempcanvas = new Canvas(tempBitmap);
+        tempcanvas.drawBitmap(myBitmap,0,0,null);
+
+
+        FaceDetector faceDetector = new FaceDetector.Builder(getApplicationContext()).setTrackingEnabled(false).build();
+        if (!faceDetector.isOperational()){
+            c=1;
+        }
+
+
+
+        Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
+        SparseArray<Face> faces = faceDetector.detect(frame);
+
+        for (int i=0;i<faces.size();i++){
+            Face thisface = faces.valueAt(i);
+            float x1 = thisface.getPosition().x;
+            float y1 = thisface.getPosition().y;
+            float x2 = x1 + thisface.getWidth();
+            float y2 = y1 + thisface.getHeight();
+            tempcanvas.drawRoundRect(new RectF(x1,y1,x2,y2),2,2,myRectPaint);
+
+
+
+
+        }
+        imageView.setImageDrawable(new BitmapDrawable(getResources(),tempBitmap));
     }
 }
