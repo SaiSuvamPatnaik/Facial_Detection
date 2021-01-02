@@ -193,7 +193,7 @@ public class face extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             imageuri = data.getData();
-            try {
+            try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageuri);
                 img.setImageBitmap(bitmap);
 
