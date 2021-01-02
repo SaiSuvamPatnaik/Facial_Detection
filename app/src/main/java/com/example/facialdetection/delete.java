@@ -1,5 +1,6 @@
 package com.example.facialdetection;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,8 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class delete extends AppCompatActivity {
 
@@ -40,11 +44,14 @@ public class delete extends AppCompatActivity {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Details").child(d1);
-                DatabaseReference myRef1 = myRef.child(String.valueOf(value));
-
-
+                final DatabaseReference myRef1 = myRef.child(String.valueOf(value));
                 myRef1.removeValue();
-                Toast.makeText(delete.this,"Data Deleted Successfully",Toast.LENGTH_SHORT).show();
+
+                
+
+
+
+
 
             }
         });
