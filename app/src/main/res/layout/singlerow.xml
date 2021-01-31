@@ -24,12 +24,11 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
 
                 android:id="@+id/img"
                 android:layout_width="105dp"
-                app:civ_border_color="#000000"
-                app:civ_border_width="1dp"
+
                 android:layout_height="253dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="0dp"

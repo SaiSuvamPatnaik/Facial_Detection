@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +60,9 @@ public class face extends AppCompatActivity {
 
     private FirebaseStorage storage=FirebaseStorage.getInstance();
     private StorageReference storageReference = storage.getReference();
-    StorageReference riversRef = storageReference.child("Images");
+
+    FirebaseAuth mFirebaseAuth;
+
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Details");
@@ -78,7 +81,7 @@ public class face extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face);
 
-
+        mFirebaseAuth=FirebaseAuth.getInstance();
         img= findViewById(R.id.img);
         name= findViewById(R.id.name);
         age= findViewById(R.id.age);
@@ -125,6 +128,8 @@ public class face extends AppCompatActivity {
                 final ProgressDialog pd = new ProgressDialog(face.this);
                 pd.setTitle("Uploading Image...");
                 pd.show();
+
+                StorageReference riversRef = storageReference.child("Images").child(mFirebaseAuth.getCurrentUser().getUid());
                 riversRef.putFile(imageuri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -157,8 +162,6 @@ public class face extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                // ...
                                 Toast.makeText(face.this, "Failed", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -199,13 +202,11 @@ public class face extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CropImage.startPickImageActivity(face.this);
-
             }
         });
 
 
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
