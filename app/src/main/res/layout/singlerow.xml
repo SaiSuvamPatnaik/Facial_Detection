@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
@@ -27,13 +28,13 @@
 
                 android:id="@+id/img"
                 android:layout_width="105dp"
-
+                app:civ_border_color="#000000"
+                app:civ_border_width="1dp"
                 android:layout_height="253dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="0dp"
                 android:src="@drawable/ic_baseline_person_24"
-
-                app:civ_border_width="3dp" />
+                tools:ignore="MissingClass" />
 
             <LinearLayout
                 android:layout_width="276dp"
@@ -50,35 +51,15 @@
 
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="50dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="0dp"
                     android:text="Mojos Cafe"
                     android:textColor="#FFFFFF"
                     android:textSize="27sp" />
 
-                <TextView
-                    android:id="@+id/age"
-                    android:layout_width="265dp"
-
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="Mojos Cafe"
-                    android:textColor="#FFFFFF"
-                    android:textSize="27sp" />
-
-                <TextView
-                    android:id="@+id/gender"
-                    android:layout_width="264dp"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="Mojos Cafe"
-                    android:textColor="#FFFFFF"
-                    android:textSize="27sp" />
-
                 <Button
+                    android:id="@+id/clk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

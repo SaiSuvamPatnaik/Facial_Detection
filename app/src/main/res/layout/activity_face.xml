@@ -107,11 +107,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.751" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img"
         android:layout_width="243dp"
         android:layout_height="222dp"
         android:src="@drawable/ic_baseline_person_24"
+        app:civ_border_color="#000000"
+        app:civ_border_width="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

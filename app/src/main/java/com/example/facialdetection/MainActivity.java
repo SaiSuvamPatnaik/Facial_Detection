@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     View view,view2;
     ImageView imageview2;
-    TextView mail,pass,frgt;
+    TextView pass,frgt;
+    EditText mail;
 
     Button login,signup;
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAuth=FirebaseAuth.getInstance();
         pass=(TextView)findViewById(R.id.pass);
-        mail=(TextView)findViewById(R.id.mail);
+        mail=findViewById(R.id.mail);
         frgt=(TextView)findViewById(R.id.frgt);
 
         login=(Button)findViewById(R.id.login);

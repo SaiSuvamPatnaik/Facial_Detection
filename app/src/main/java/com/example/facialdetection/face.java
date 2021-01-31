@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -45,6 +47,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -65,7 +69,7 @@ public class face extends AppCompatActivity {
     String d1,val,data4,val1;
     Button add,show,dlt;
     static final int PICK_IMAGE=1;
-    Uri imageuri;
+    Uri imageuri,uri;
     private Object Tag;
     int c=0;
 
@@ -194,37 +198,54 @@ public class face extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gallery = new Intent();
-                gallery.setType("image/*");
-                gallery.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(gallery,"Select a Picture"),PICK_IMAGE);
+                CropImage.startPickImageActivity(face.this);
+
             }
         });
 
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-
-            imageuri = data.getData();
-            try{
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageuri);
-                img.setImageBitmap(bitmap);
-                getBitmapFromUri(imageuri);
-
-
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri imageuri = CropImage.getPickImageResultUri(this, data);
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageuri)) {
+                uri = imageuri;
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            } else {
+                startcrop(imageuri);
             }
         }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageuri=result.getUri();
+                img.setImageURI(imageuri);
+                try {
+                    getBitmapFromUri(imageuri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+
     }
+
+    private void startcrop(Uri imageuri) {
+        CropImage.activity(imageuri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getBitmapFromUri(Uri imageuri) throws IOException {
@@ -238,7 +259,7 @@ public class face extends AppCompatActivity {
     private void showImage(FileDescriptor fileDescriptor) {
         ImageView imageView = findViewById(R.id.img);
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inMutable=true;
+
 
         Bitmap myBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
         Paint myRectPaint = new Paint();
